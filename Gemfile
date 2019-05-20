@@ -25,6 +25,11 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 # fast JSON API(jsonapi.org) serializer (http://github.com/Netflix/fast_jsonapi)
 gem 'fast_jsonapi'
+# for enabling cors
+gem 'rack-cors'
+# netflix jsonapi
+gem 'restful-jsonapi'
+gem 'jsonapi-rails'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password
