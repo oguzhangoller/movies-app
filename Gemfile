@@ -58,6 +58,15 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+group :development, :test do
+  # Guard keeps an eye on your file modifications (http://guardgem.org)
+  gem 'guard'
+  # Guard plugin for the Minitest framework (https://rubygems.org/gems/guard-minitest)
+  gem 'guard-minitest'
+  # Guard plugin for RuboCop (https://github.com/yujinakayama/guard-rubocop)
+  gem 'guard-rubocop'
+end
+
 group :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '>= 2.15'

@@ -1,0 +1,47 @@
+AllCops:
+  Exclude:
+    - 'Gemfile'
+    - 'Guardfile'
+    - 'db/**/*'
+    - 'config/**/*'
+    - 'script/**/*'
+    - 'bin/*'
+    - 'test/factories/*'
+    - !ruby/regexp /old_and_unused\.rb$/
+    - 'docs/*'
+
+Metrics/LineLength:
+  Max: 100
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/SymbolArray:
+  EnforcedStyle: brackets
+
+Metrics/AbcSize:
+  Max: 20
+  Exclude:
+    - 'test/**/*_test.rb'
+    - 'db/migrate/**/*.rb'
+
+Metrics/MethodLength:
+  Max: 15
+  Exclude:
+    - 'test/**/*_test.rb'
+    - 'db/migrate/**/*.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'test/**/*.rb'
+    - 'config/routes.rb'
+    - 'config/environments/production.rb'
+    - 'config/environments/development.rb'
+
+Metrics/ClassLength:
+  Max: 110
+  Exclude:
+    - 'test/**/*_test.rb'
