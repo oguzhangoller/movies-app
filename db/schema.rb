@@ -35,8 +35,17 @@ ActiveRecord::Schema.define(version: 2019_05_06_195337) do
     t.text "description"
     t.integer "year"
     t.float "rating"
+    t.float "imdb_rating"
+    t.string "language"
+    t.integer "runtime"
+    t.integer "moviedb_id"
+    t.float "popularity"
+    t.string "poster_path"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["moviedb_id"], name: "index_movies_on_moviedb_id", unique: true
   end
 
+  add_foreign_key "movie_categories", "categories"
+  add_foreign_key "movie_categories", "movies"
 end

@@ -79,6 +79,8 @@ GEM
     crass (1.0.4)
     erubi (1.8.0)
     execjs (2.7.0)
+    faraday (0.15.4)
+      multipart-post (>= 1.2, < 3)
     fast_jsonapi (1.3)
       activesupport (>= 4.2)
     ffi (1.10.0)
@@ -104,7 +106,7 @@ GEM
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
     io-like (0.3.0)
-    jaro_winkler (1.5.1-x86_64-darwin-17)
+    jaro_winkler (1.5.1)
     jbuilder (2.8.0)
       activesupport (>= 4.2.0)
       multi_json (>= 1.2)
@@ -119,6 +121,18 @@ GEM
     jsonapi-renderer (0.2.0)
     jsonapi-serializable (0.3.1)
       jsonapi-renderer (~> 0.2.0)
+    kaminari (1.1.1)
+      activesupport (>= 4.1.0)
+      kaminari-actionview (= 1.1.1)
+      kaminari-activerecord (= 1.1.1)
+      kaminari-core (= 1.1.1)
+    kaminari-actionview (1.1.1)
+      actionview
+      kaminari-core (= 1.1.1)
+    kaminari-activerecord (1.1.1)
+      activerecord
+      kaminari-core (= 1.1.1)
+    kaminari-core (1.1.1)
     listen (3.1.5)
       rb-fsevent (~> 0.9, >= 0.9.4)
       rb-inotify (~> 0.9, >= 0.9.7)
@@ -138,6 +152,7 @@ GEM
     minitest (5.11.3)
     msgpack (1.2.10)
     multi_json (1.13.1)
+    multipart-post (2.1.1)
     nenv (0.3.0)
     nio4r (2.3.1)
     nokogiri (1.10.3)
@@ -261,12 +276,14 @@ DEPENDENCIES
   capybara (>= 2.15)
   chromedriver-helper
   coffee-rails (~> 4.2)
+  faraday (~> 0.15.4)
   fast_jsonapi
   guard
   guard-minitest
   guard-rubocop
   jbuilder (~> 2.5)
   jsonapi-rails
+  kaminari
   listen (>= 3.0.5, < 3.2)
   pg
   puma (~> 3.11)

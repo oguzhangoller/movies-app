@@ -3,7 +3,7 @@
 class MoviesController < ApplicationController
   skip_before_action :verify_authenticity_token, raise: false
   def create
-    movie = Movie.create!(movie_params)
+    movie = Movie.create!(movie_create_params)
     category_params.each do |category_id|
       MovieCategory.create!(movie_id: movie.id, category_id: category_id)
     end
@@ -20,12 +20,21 @@ class MoviesController < ApplicationController
   end
 
   def index
-    render json: MovieSerializer.new(Movie.all)
+    per_page = params[:per_page] || 20
+    page = params[:page] || 1
+    options = {}
+    options[:meta] = {
+      page: page,
+      total_pages:  Movie.all.count / per_page.to_i + 1, 
+    }
+    render json: MovieSerializer.new(Movie.all
+                                          .page(page)
+                                          .per(per_page), options)
   end
 
   private
 
-  def movie_params
+  def movie_create_params
     params.require(:_jsonapi)
     .require(:data)
     .require(:attributes)
