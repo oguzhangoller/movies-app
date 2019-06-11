@@ -35,7 +35,7 @@ module MovieWorker
           geans.each do |genreId|
             mc = MovieCategory.create(movie_id: movieId, category_id: genreId)
             mc.save
-          end 
+          end
         end
         break unless page < 200
       end

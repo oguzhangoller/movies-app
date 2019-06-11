@@ -1,33 +1,32 @@
 # frozen_string_literal: true
 
 module MovieWorker
-  class ActorCollector
+  class MovieActorCollector
     def collect
       conn = Faraday.new(:url => 'https://api.themoviedb.org')
-      page = 0
-      loop do
-        page += 1
+      movieCount = 0
+      Movie.all.each do |movie|
+        movieCount += 1
+        movie_id = movie.moviedb_id
         response = conn.get do |req|
-          req.url '/3/person/popular'
+          req.url "/3/movie/#{movie_id}/credits"
           req.headers['Content-Type'] = 'application/json'
           req.params['api_key'] = 'c782fd67766d1efa7f0e6fb2c38d430f'
-          req.params['page'] = page
         end
 
         json = JSON.parse(response.body)
-        results = json["results"]
+        results = json["cast"]
+        counter = 0
         results.each do |result|
-          id = result["id"]
-          name = result["name"]
-          popularity = result["popularity"]
-          poster_path = result["profile_path"]
+          counter += 1
           begin
-            ac = Actor.new(id: id, name: name, popularity: popularity, poster_path: poster_path)
-            ac.save!
+            ma = MovieActor.new(movie_id: movie.id, actor_id: result["id"])
+            ma.save!
           rescue StandardError => error
           end
+          break unless counter < 3
         end
-        break unless page < 50
+        break unless movieCount < 500
       end
     end
   end
