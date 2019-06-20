@@ -32,6 +32,11 @@ class MoviesController < ApplicationController
                                           .per(per_page), options)
   end
 
+  def recommended_movies
+    movies = MovieService::RecommendedMovies.new.call(recommended_movie_params)
+    render json: MovieSerializer.new(movies.first(3))
+  end
+
   private
 
   def movie_create_params
@@ -51,5 +56,9 @@ class MoviesController < ApplicationController
       id_array.push(obj[:id]) 
     end
     id_array
+  end
+
+  def recommended_movie_params
+    Movie.find(params[:id]).moviedb_id
   end
 end
