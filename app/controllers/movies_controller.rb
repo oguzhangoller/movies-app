@@ -33,7 +33,12 @@ class MoviesController < ApplicationController
   end
 
   def recommended_movies
-    movies = MovieService::RecommendedMovies.new.call(recommended_movie_params)
+    movies = MovieService::RecommendedMovies.new.call(moviedb_id)
+    render json: MovieSerializer.new(movies.first(3))
+  end
+
+  def similar_movies
+    movies = MovieService::SimilarMovies.new.call(moviedb_id)
     render json: MovieSerializer.new(movies.first(3))
   end
 
@@ -58,7 +63,7 @@ class MoviesController < ApplicationController
     id_array
   end
 
-  def recommended_movie_params
+  def moviedb_id
     Movie.find(params[:id]).moviedb_id
   end
 end
