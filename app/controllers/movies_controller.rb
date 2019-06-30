@@ -27,9 +27,11 @@ class MoviesController < ApplicationController
       page: page,
       total_pages:  Movie.all.count / per_page.to_i + 1, 
     }
-    render json: MovieSerializer.new(Movie.all
+    render json: MovieSerializer.new(Movie.where("rating>?",6)
                                           .page(page)
-                                          .per(per_page), options)
+                                          .per(per_page)
+                                          .order(popularity: :desc),
+                                          options)
   end
 
   def recommended_movies

@@ -13,7 +13,6 @@ module MovieWorker
           req.params['api_key'] = 'c782fd67766d1efa7f0e6fb2c38d430f'
           req.params['page'] = page
         end
-
         json = JSON.parse(response.body)
         results = json["results"]
         results.each do |result|
@@ -24,7 +23,8 @@ module MovieWorker
           begin
             ac = Actor.new(id: id, name: name, popularity: popularity, poster_path: poster_path)
             ac.save!
-          rescue StandardError => error
+          rescue
+            next
           end
         end
         break unless page < 50

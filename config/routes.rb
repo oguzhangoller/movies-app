@@ -5,5 +5,9 @@ Rails.application.routes.draw do
     end
   end 
   resources :categories
-  resources :actors
+  resources :actors do
+    member do
+      get :actor_movies
+    end
+  end
 end

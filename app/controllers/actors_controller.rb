@@ -13,7 +13,7 @@ class ActorsController < ApplicationController
   end
 
   def show
-    actor = Actor.find(params[:id])
+    actor = Actor.find(actor_id)
     render json: ActorSerializer.new(actor)
   end
 
@@ -23,14 +23,24 @@ class ActorsController < ApplicationController
     options = {}
     options[:meta] = {
       page: page,
-      total_pages:  Actor.all.count / per_page.to_i + 1, 
+      total_pages: Actor.all.count / per_page.to_i + 1,
     }
     render json: ActorSerializer.new(Actor.all
                                           .page(page)
-                                          .per(per_page), options)
+                                          .per(per_page)
+                                          .order(popularity: :desc), options)
+  end
+
+  def actor_movies
+    movies = MovieService::ActorMovies.new.call(actor_id)
+    render json: MovieSerializer.new(movies.first(3))
   end
 
   private
+
+  def actor_id
+    params[:id]
+  end
 
   def actor_create_params
     params.require(:_jsonapi)
