@@ -34,6 +34,8 @@ gem 'rack-cors'
 # netflix jsonapi
 gem 'restful-jsonapi'
 gem 'jsonapi-rails'
+# search
+gem 'ransack'
 # Use Redis adapter to run Action Cable in production
 # gem 'redis', '~> 4.0'
 # Use ActiveModel has_secure_password

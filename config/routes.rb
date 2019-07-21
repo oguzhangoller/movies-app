@@ -3,11 +3,12 @@ Rails.application.routes.draw do
     member do
       get :recommended_movies, :similar_movies
     end
-  end 
+  end
   resources :categories
   resources :actors do
     member do
       get :actor_movies
     end
   end
+  get '/search', to: 'search#result'
 end
