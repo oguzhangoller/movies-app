@@ -25,13 +25,13 @@ class MoviesController < ApplicationController
     options = {}
     options[:meta] = {
       page: page,
-      total_pages:  Movie.all.count / per_page.to_i + 1, 
+      total_pages:  Movie.all.count / per_page.to_i + 1
     }
-    render json: MovieSerializer.new(Movie.where("rating>?",6)
+    render json: MovieSerializer.new(Movie.where('rating>?', 6)
                                           .page(page)
                                           .per(per_page)
                                           .order(popularity: :desc),
-                                          options)
+                                     options)
   end
 
   def recommended_movies
@@ -48,19 +48,19 @@ class MoviesController < ApplicationController
 
   def movie_create_params
     params.require(:_jsonapi)
-    .require(:data)
-    .require(:attributes)
-    .permit(:name, :description, :year, :rating)
+          .require(:data)
+          .require(:attributes)
+          .permit(:name, :description, :year, :rating)
   end
 
   def category_params
     id_array = []
     params.require(:_jsonapi)
-    .require(:data)
-    .require(:relationships)
-    .require(:categories)
-    .require(:data).each do |obj|
-      id_array.push(obj[:id]) 
+          .require(:data)
+          .require(:relationships)
+          .require(:categories)
+          .require(:data).each do |obj|
+      id_array.push(obj[:id])
     end
     id_array
   end

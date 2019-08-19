@@ -9,7 +9,7 @@ class MovieService::RecommendedMovies
   end
 
   def make_recommendations_request(moviedb_id)
-    conn = Faraday.new(:url => 'https://api.themoviedb.org')
+    conn = Faraday.new(url: 'https://api.themoviedb.org')
     response = conn.get do |req|
       req.url "/3/movie/#{moviedb_id}/recommendations"
       req.headers['Content-Type'] = 'application/json'
@@ -21,7 +21,7 @@ class MovieService::RecommendedMovies
 
   def get_movie_ids_from_response(response)
     json = JSON.parse(response.body)
-    movie_ids = json["results"].map { |result| result["id"] }
+    movie_ids = json['results'].map { |result| result['id'] }
     movie_ids
   end
 

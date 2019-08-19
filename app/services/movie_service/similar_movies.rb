@@ -9,7 +9,7 @@ class MovieService::SimilarMovies
   end
 
   def request_for_similar_movies(moviedb_id)
-    conn = Faraday.new(:url => 'https://api.themoviedb.org')
+    conn = Faraday.new(url: 'https://api.themoviedb.org')
     response = conn.get do |req|
       req.url "/3/movie/#{moviedb_id}/similar"
       req.headers['Content-Type'] = 'application/json'
@@ -21,7 +21,7 @@ class MovieService::SimilarMovies
 
   def get_movie_ids_from_response(response)
     json = JSON.parse(response.body)
-    movie_ids = json["results"].map { |result| result["id"] }
+    movie_ids = json['results'].map { |result| result['id'] }
     movie_ids
   end
 

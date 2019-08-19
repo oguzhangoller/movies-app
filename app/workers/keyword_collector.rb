@@ -3,7 +3,7 @@
 module MovieWorker
   class KeywordCollector
     def collect
-      conn = Faraday.new(:url => 'https://api.themoviedb.org')
+      conn = Faraday.new(url: 'https://api.themoviedb.org')
       page = 0
       Movie.all.each do |movie|
         page += 1
@@ -13,21 +13,24 @@ module MovieWorker
           req.headers['Content-Type'] = 'application/json'
           req.params['api_key'] = 'c782fd67766d1efa7f0e6fb2c38d430f'
         end
+        save_movie_keyword(response)
+        break if page > 500
+      end
+    end
 
-        json = JSON.parse(response.body)
-        results = json["keywords"]
-        results.each do |result|
-          result_id = result["id"].to_i
-          if Keyword.where(id: result_id).empty?
-            k = Keyword.new(id: result_id, name: result["name"])
-            k.save!
-          end
-          if MovieKeyword.where(movie_id: movie.id, keyword_id: result_id).empty?
-            mk = MovieKeyword.new(movie_id: movie.id, keyword_id: result_id)
-            mk.save!
-          end
+    def save_movie_keyword(response)
+      json = JSON.parse(response.body)
+      results = json['keywords']
+      results.each do |result|
+        result_id = result['id'].to_i
+        if Keyword.where(id: result_id).empty?
+          keyword = Keyword.new(id: result_id, name: result['name'])
+          keyword.save!
         end
-        break if page>500
+        if MovieKeyword.where(movie_id: movie.id, keyword_id: result_id).empty?
+          movie_keyword = MovieKeyword.new(movie_id: movie.id, keyword_id: result_id)
+          movie_keyword.save!
+        end
       end
     end
   end

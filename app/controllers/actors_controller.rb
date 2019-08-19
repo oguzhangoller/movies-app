@@ -23,7 +23,7 @@ class ActorsController < ApplicationController
     options = {}
     options[:meta] = {
       page: page,
-      total_pages: Actor.all.count / per_page.to_i + 1,
+      total_pages: Actor.all.count / per_page.to_i + 1
     }
     render json: ActorSerializer.new(Actor.all
                                           .page(page)
@@ -44,8 +44,8 @@ class ActorsController < ApplicationController
 
   def actor_create_params
     params.require(:_jsonapi)
-    .require(:data)
-    .require(:attributes)
-    .permit(:name, :popularity, :poster_path)
+          .require(:data)
+          .require(:attributes)
+          .permit(:name, :popularity, :poster_path)
   end
 end
